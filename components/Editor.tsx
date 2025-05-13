@@ -27,6 +27,7 @@ const Editor = () => {
     setDoc(yDoc);
     setProvider(yProvider);
 
+
     return () => {
       yProvider.destroy();
       yDoc.destroy();
