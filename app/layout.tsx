@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,9 +17,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body>
+    <html lang="en">
+      <body>
+        <ClerkProvider>
           <Header />
           <div className="flex min-h-screen">
             <Sidebar/>
@@ -26,8 +27,9 @@ export default function RootLayout({
               {children}
             </div>
           </div>
-        </body>
-      </html>
-    </ClerkProvider>
+          <Toaster position="top-center" />
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }

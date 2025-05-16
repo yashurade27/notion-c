@@ -6,7 +6,7 @@ import { useRoom, useSelf } from "@liveblocks/react";
 import { LiveblocksYjsProvider } from "@liveblocks/yjs";
 import { Button } from "./ui/button";
 import { MoonIcon, SunIcon } from "lucide-react";
-import { BlockNoteView } from "@blocknote/shadcn"; 
+import { BlockNoteView } from "@blocknote/shadcn";
 import { useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/shadcn/style.css";
 import "@blocknote/core/fonts/inter.css";
@@ -38,25 +38,24 @@ const Editor = () => {
   const editor = useCreateBlockNote(
     doc && provider && userInfo
       ? {
-          collaboration: {
-            provider,
-            fragment: doc.getXmlFragment("document-store"),
-            user: {
-              name: userInfo.name || "Anonymous",
-              color: stringToColor(userInfo.email || "default"),
-            },
+        collaboration: {
+          provider,
+          fragment: doc.getXmlFragment("document-store"),
+          user: {
+            name: userInfo.name || "Anonymous",
+            color: stringToColor(userInfo.email || "default"),
           },
-        }
+        },
+      }
       : undefined
   );
 
   if (!userInfo || !doc || !provider || !editor) return null;
 
-  const style = `hover:text-white ${
-    darkMode
+  const style = `hover:text-white ${darkMode
       ? "text-gray-300 bg-gray-700 hover:bg-gray-100 hover:text-gray-900"
       : "text-gray-900 bg-gray-100 hover:bg-gray-700 hover:text-white"
-  }`;
+    }`;
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -65,7 +64,6 @@ const Editor = () => {
           {darkMode ? <SunIcon /> : <MoonIcon />}
         </Button>
       </div>
-
       <div className="relative max-w-6xl mx-auto">
         <BlockNoteView editor={editor} theme={darkMode ? "dark" : "light"} />
       </div>
