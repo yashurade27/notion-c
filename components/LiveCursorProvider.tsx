@@ -3,8 +3,9 @@
 import { useMyPresence, useOthers } from "@liveblocks/react";
 import { PointerEvent } from "react";
 import FollowPointer from "./FollowPointer";
+
 const LiveCursorProvider = ({ children }: { children: React.ReactNode }) => {
-  const [myPresence, updateMyPresence] = useMyPresence();
+  const [, updateMyPresence] = useMyPresence(); // used below, no need for disable comment
   const others = useOthers();
 
   function handlePointerMove(e: PointerEvent<HTMLDivElement>) {
@@ -13,7 +14,7 @@ const LiveCursorProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   function handlePointerLeave() {
-    //@ts-ignore
+    // @ts-expect-error: Cursor can be null to indicate absence
     updateMyPresence({ cursor: null });
   }
 
@@ -24,13 +25,11 @@ const LiveCursorProvider = ({ children }: { children: React.ReactNode }) => {
         .map(({ connectionId, presence, info }) => (
           <FollowPointer
             key={connectionId}
-            //cursor={presence.cursor}
             info={info}
             x={presence.cursor!.x}
             y={presence.cursor!.y}
           />
         ))}
-
       {children}
     </div>
   );

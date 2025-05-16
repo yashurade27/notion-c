@@ -1,17 +1,18 @@
 import { auth } from "@clerk/nextjs/server";
 import RoomProvider from "@/components/RoomProvider";
 
-const DocLayout = async ({ children, params }: {
+const DocLayout = async ({
+  children,
+  params,
+}: {
   children: React.ReactNode;
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) => {
-  // Await params to ensure we get the dynamic `id`
-  const { id } = await params;
+  const { id } = await params; // await params because it's a Promise now
 
   // Perform authentication check
   const { userId } = await auth();
 
-  // If user is not authenticated, throw an error
   if (!userId) {
     throw new Error("User is not authenticated");
   }
