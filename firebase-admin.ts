@@ -1,15 +1,18 @@
-import {initializeApp, getApps, getApp, cert, App} from "firebase-admin/app"
-import {getFirestore} from "firebase-admin/firestore"
-
-const serviceKey = require("@/service_key.json");
+import { initializeApp, getApps, getApp, cert, App } from "firebase-admin/app";
+import { getFirestore } from "firebase-admin/firestore";
 
 let app: App;
-if(getApps().length === 0) {
-    app = initializeApp({
-        credential: cert(serviceKey),
-    });
+
+const serviceAccount = JSON.parse(
+  Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT!, "base64").toString("utf-8")
+);
+
+if (getApps().length === 0) {
+  app = initializeApp({
+    credential: cert(serviceAccount),
+  });
 } else {
-    app = getApp();
+  app = getApp();
 }
 
 const adminDb = getFirestore(app);
